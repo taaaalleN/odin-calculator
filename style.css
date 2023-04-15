@@ -1,0 +1,35 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    min-height: 90vh;
+}
+
+#calculator {
+    width: 40%;
+    height: 60%;
+    /* display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center; */
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    /* flex-basis: 25%; */
+    justify-content: center;
+}
+
+#calculator .button {
+    border: 1px solid black;
+    padding: 1em;
+    flex-basis: 25%;
+    cursor: pointer;
+    text-align: center;
+}
+
+#calculator .button:hover {
+
+    background-color: #efefef;
+}
