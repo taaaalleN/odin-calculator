@@ -22,24 +22,16 @@ function divide(firstNumber, secondNumber) {
   return firstNumber / secondNumber;
 }
 
+function clear() {
+  display.innerText = "";
+  first = "";
+  second = "";
+  operator = "";
+}
+
 function operate(operator, firstNumber, secondNumber) {
   operator(firstNumber, secondNumber);
 }
-
-// numbers.forEach((number) =>
-//   number.addEventListener("click", (e) => {
-//     const currentValue = e.target.getAttribute("data-value");
-//     if (currentValue == null) {
-//       return;
-//     }
-
-//     displayValue += currentValue;
-//     console.log("displayValue", displayValue);
-//     display.innerText = "";
-//     display.innerText = displayValue;
-//     console.log(displayValue);
-//   })
-// );
 
 function handleClick(elements) {
   elements.forEach((element) =>
@@ -49,30 +41,28 @@ function handleClick(elements) {
         return;
       }
 
-      if (elements == numbers) {
-        displayValue += currentValue;
-        display.innerText = "";
-        display.innerText = displayValue;
-      } else if (elements == operators) {
-        displayValue += currentValue;
-        display.innerText = "";
-        display.innerText = displayValue;
-
-        const operation = currentValue;
-        if (operation == "sum") {
-          try {
-            const sum = operate(operation, firstNumber, secondNumber);
-            display.innerText = sum;
-          } catch (e) {
-            console.log(e);
-          }
-        } else {
-          // else set firstNunber to the current display value
-          // save operator
-          // start setting second number
+      if (elements == operators) {
+        switch (currentValue) {
+          case "sum":
+            break;
+          case "add":
+            break;
+          case "subtract":
+            break;
+          case "multiply":
+            break;
+          case "divide":
+            break;
+          case "clear":
+            clear();
+            break;
+          default:
+            break;
         }
+      } else {
+        displayValue += currentValue;
+        display.innerText = displayValue;
       }
-      return;
     })
   );
 }
