@@ -1,3 +1,7 @@
+const numbers = document.querySelectorAll(".buttons .numbers");
+const operators = document.querySelectorAll(".buttons .operators");
+const display = document.querySelector(".display");
+let displayValue = "";
 let first;
 let second;
 let operator;
@@ -22,19 +26,56 @@ function operate(operator, firstNumber, secondNumber) {
   operator(firstNumber, secondNumber);
 }
 
-const numbers = document.querySelectorAll(".buttons .numbers");
-const operators = document.querySelectorAll(".buttons .operators");
-let displayValue = "";
-let display = document.querySelector(".display");
+// numbers.forEach((number) =>
+//   number.addEventListener("click", (e) => {
+//     const currentValue = e.target.getAttribute("data-value");
+//     if (currentValue == null) {
+//       return;
+//     }
 
-numbers.forEach((number) =>
-  number.addEventListener("click", (e) => {
-    console.log(e.target.innerText);
-    displayValue += e.target.innerText;
-    display.innerText = "";
-    display.innerText = displayValue;
-    console.log(displayValue);
-    // displayValue += number.innerText;
-    // display.innerText = displayValue;
-  })
-);
+//     displayValue += currentValue;
+//     console.log("displayValue", displayValue);
+//     display.innerText = "";
+//     display.innerText = displayValue;
+//     console.log(displayValue);
+//   })
+// );
+
+function handleClick(elements) {
+  elements.forEach((element) =>
+    element.addEventListener("click", (e) => {
+      const currentValue = e.target.getAttribute("data-value");
+      if (currentValue == null) {
+        return;
+      }
+
+      if (elements == numbers) {
+        displayValue += currentValue;
+        display.innerText = "";
+        display.innerText = displayValue;
+      } else if (elements == operators) {
+        displayValue += currentValue;
+        display.innerText = "";
+        display.innerText = displayValue;
+
+        const operation = currentValue;
+        if (operation == "sum") {
+          try {
+            const sum = operate(operation, firstNumber, secondNumber);
+            display.innerText = sum;
+          } catch (e) {
+            console.log(e);
+          }
+        } else {
+          // else set firstNunber to the current display value
+          // save operator
+          // start setting second number
+        }
+      }
+      return;
+    })
+  );
+}
+
+handleClick(numbers);
+handleClick(operators);
