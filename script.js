@@ -5,6 +5,7 @@ let displayValue = "";
 let first;
 let second;
 let selectedOperator;
+// let selectedOperators = [];
 
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
@@ -24,6 +25,7 @@ function divide(firstNumber, secondNumber) {
 
 function clear() {
   display.innerText = "";
+  displayValue = "";
   first = "";
   second = "";
   selectedOperator = "";
@@ -41,6 +43,7 @@ function operate(operator, firstNumber, secondNumber) {
   if (operatorFunction) {
     return operatorFunction(firstNumber, secondNumber);
   } else {
+    console.error(operator + " is an invalid operator");
     throw new Error("Invalid operator");
   }
 }
@@ -54,27 +57,32 @@ function handleClick(elements) {
       }
 
       if (elements == operators) {
+        const currentSymbol = e.target.innerText;
+        if (currentValue != "sum") {
+          selectedOperator = currentValue;
+        }
+        // console.log(selectedOperator);
+
         switch (currentValue) {
           case "sum":
-            // console.log("Operator", selectedOperator, "\n First number", first, "\n Second number", second);
-            operate(selectedOperator, first, second);
+            const regex = /\+|-|\*|\//g;
+            let tempArray = displayValue.split(regex);
+            first = parseInt(tempArray[0]);
+            second = parseInt(tempArray[1]);
+            console.log("Operator", selectedOperator, "\n First number", first, "\n Second number", second);
+            const answer = operate(selectedOperator, first, second);
+            display.innerText = answer;
+            first = "";
+            second = "";
             break;
           case "add":
-            // console.log("Add");
-            selectedOperator = "add";
-            // console.log(selectedOperator);
-            displayValue += "+";
-            display.innerText = displayValue;
-            break;
           case "subtract":
-            selectedOperator = "subtract";
-            break;
           case "multiply":
-            selectedOperator = "multiply";
-            break;
           case "divide":
-            selectedOperator = "divide";
-            displayValue += "/";
+            selectedOperator = currentValue;
+            firstNumber = displayValue;
+            displayValue += currentSymbol;
+            display.innerText = displayValue;
             break;
           case "clear":
             clear();
