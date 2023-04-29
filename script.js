@@ -2,32 +2,33 @@ const numbers = document.querySelectorAll(".buttons .numbers");
 const operators = document.querySelectorAll(".buttons .operators");
 const display = document.querySelector(".display");
 let displayValue = "";
-let first;
-let second;
+let firstNumber;
+let secondNumber;
 let selectedOperator;
 // let selectedOperators = [];
+let displayArray = [];
 
-function add(firstNumber, secondNumber) {
-  return firstNumber + secondNumber;
+function add(firstValue, secondValue) {
+  return firstValue + secondValue;
 }
 
-function subtract(firstNumber, secondNumber) {
-  return firstNumber - secondNumber;
+function subtract(firstValue, secondValue) {
+  return firstValue - secondValue;
 }
 
-function multiply(firstNumber, secondNumber) {
-  return firstNumber * secondNumber;
+function multiply(firstValue, secondValue) {
+  return firstValue * secondValue;
 }
 
-function divide(firstNumber, secondNumber) {
-  return firstNumber / secondNumber;
+function divide(firstValue, secondValue) {
+  return firstValue / secondValue;
 }
 
 function clear() {
   display.innerText = "";
   displayValue = "";
-  first = "";
-  second = "";
+  firstNumber = "";
+  secondNumber = "";
   selectedOperator = "";
 }
 
@@ -38,10 +39,10 @@ let operatorsMap = {
   divide: divide,
 };
 
-function operate(operator, firstNumber, secondNumber) {
+function operate(operator, firstValue, secondValue) {
   const operatorFunction = operatorsMap[operator];
   if (operatorFunction) {
-    return operatorFunction(firstNumber, secondNumber);
+    return operatorFunction(firstValue, secondValue);
   } else {
     console.error(operator + " is an invalid operator");
     throw new Error("Invalid operator");
@@ -60,27 +61,40 @@ function handleClick(elements) {
         const currentSymbol = e.target.innerText;
         if (currentValue != "sum") {
           selectedOperator = currentValue;
+
+          if (!firstNumber) {
+            firstNumber = 0;
+          }
         }
         // console.log(selectedOperator);
 
+        // Doesn't handle if secondNumber is 0
+        // E.g. 36-- instead of 36-X
+
+        if (currentValue == "sum") {
+        }
         switch (currentValue) {
           case "sum":
+            if (!secondNumber) {
+              console.log("asd");
+              secondNumber = firstNumber;
+            }
             const regex = /\+|-|\*|\//g;
             let tempArray = displayValue.split(regex);
-            first = parseInt(tempArray[0]);
-            second = parseInt(tempArray[1]);
-            console.log("Operator", selectedOperator, "\n First number", first, "\n Second number", second);
-            const answer = operate(selectedOperator, first, second);
+            firstNumber = parseInt(tempArray[0]);
+            secondNumber = parseInt(tempArray[1]);
+            console.log("Operator", selectedOperator, "\n First number", firstNumber, "\n Second number", secondNumber);
+            const answer = operate(selectedOperator, firstNumber, secondNumber);
             display.innerText = answer;
-            first = "";
-            second = "";
+            firstNumber = "";
+            secondNumber = "";
             break;
           case "add":
           case "subtract":
           case "multiply":
           case "divide":
-            selectedOperator = currentValue;
-            firstNumber = displayValue;
+            // selectedOperator = currentValue;
+            // firstNumber = displayValue;
             displayValue += currentSymbol;
             display.innerText = displayValue;
             break;
