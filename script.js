@@ -6,7 +6,7 @@ let firstNumber;
 let secondNumber;
 let selectedOperator;
 // let selectedOperators = [];
-let displayArray = [];
+let currentDisplayArray = [];
 
 function add(firstValue, secondValue) {
   return firstValue + secondValue;
@@ -59,6 +59,8 @@ function handleClick(elements) {
 
       if (elements == operators) {
         const currentSymbol = e.target.innerText;
+        currentDisplayArray.push(currentSymbol);
+
         if (currentValue != "sum") {
           selectedOperator = currentValue;
 
@@ -66,10 +68,6 @@ function handleClick(elements) {
             firstNumber = 0;
           }
         }
-        // console.log(selectedOperator);
-
-        // Doesn't handle if secondNumber is 0
-        // E.g. 36-- instead of 36-X
 
         if (currentValue == "sum") {
         }
@@ -93,8 +91,6 @@ function handleClick(elements) {
           case "subtract":
           case "multiply":
           case "divide":
-            // selectedOperator = currentValue;
-            // firstNumber = displayValue;
             displayValue += currentSymbol;
             display.innerText = displayValue;
             break;
@@ -107,7 +103,9 @@ function handleClick(elements) {
       } else {
         displayValue += currentValue;
         display.innerText = displayValue;
+        currentDisplayArray.push(currentValue);
       }
+      console.log(currentDisplayArray);
     })
   );
 }
