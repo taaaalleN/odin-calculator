@@ -7,6 +7,7 @@ let secondNumber;
 let selectedOperator;
 // let selectedOperators = [];
 let currentDisplayArray = [];
+let previousInput = "";
 
 function add(firstValue, secondValue) {
   return firstValue + secondValue;
@@ -60,13 +61,25 @@ function handleClick(elements) {
       if (elements == operators) {
         const currentSymbol = e.target.innerText;
         currentDisplayArray.push(currentSymbol);
+        previousInput = currentDisplayArray.pop();
+
+        // If previous input is operator
+        // Set currentValue/currentSymbol to latest one
+        if (previousInput == "element") {
+          // selectedOperator = currentValue;
+        }
 
         if (currentValue != "sum") {
           selectedOperator = currentValue;
+        }
+        const regex = /\+|-|\*|\//g;
 
-          if (!firstNumber) {
-            firstNumber = 0;
-          }
+        if (!firstNumber) {
+          let tempArray = displayValue.split(regex);
+          firstNumber = parseInt(tempArray[0]);
+        } else if (!secondNumber) {
+          let tempArray = displayValue.split(regex);
+          secondNumber = parseInt(tempArray[1]);
         }
 
         if (currentValue == "sum") {
@@ -77,20 +90,24 @@ function handleClick(elements) {
               console.log("asd");
               secondNumber = firstNumber;
             }
-            const regex = /\+|-|\*|\//g;
-            let tempArray = displayValue.split(regex);
-            firstNumber = parseInt(tempArray[0]);
-            secondNumber = parseInt(tempArray[1]);
+            // const regex = /\+|-|\*|\//g;
+            // let tempArray = displayValue.split(regex);
+            // firstNumber = parseInt(tempArray[0]);
+            // secondNumber = parseInt(tempArray[1]);
             console.log("Operator", selectedOperator, "\n First number", firstNumber, "\n Second number", secondNumber);
             const answer = operate(selectedOperator, firstNumber, secondNumber);
-            display.innerText = answer;
-            firstNumber = "";
+            displayValue = answer;
+            display.innerText = displayValue;
+            firstNumber = answer;
             secondNumber = "";
             break;
           case "add":
           case "subtract":
           case "multiply":
           case "divide":
+            if (!firstNumber) {
+              firstNumber = 0;
+            }
             displayValue += currentSymbol;
             display.innerText = displayValue;
             break;
@@ -105,7 +122,11 @@ function handleClick(elements) {
         display.innerText = displayValue;
         currentDisplayArray.push(currentValue);
       }
-      console.log(currentDisplayArray);
+      console.log("currentDisplayArray", currentDisplayArray);
+      console.log("firstNumber", firstNumber);
+      console.log("secondNumber", secondNumber);
+      console.log("displayValue", displayValue);
+      console.log("previousInput", previousInput);
     })
   );
 }
