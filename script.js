@@ -2,8 +2,8 @@ const numbers = document.querySelectorAll(".buttons .numbers");
 const operators = document.querySelectorAll(".buttons .operators");
 const display = document.querySelector(".display");
 let displayValue = "";
-let firstNumber;
-let secondNumber;
+let firstNumber = 0;
+let secondNumber = 0;
 let selectedOperator;
 // let selectedOperators = [];
 let currentDisplayArray = [];
@@ -50,6 +50,23 @@ function operate(operator, firstValue, secondValue) {
   }
 }
 
+function calculate() {
+  if (!secondNumber) {
+    console.log("asd");
+    secondNumber = firstNumber;
+  }
+  // const regex = /\+|-|\*|\//g;
+  // let tempArray = displayValue.split(regex);
+  // firstNumber = parseInt(tempArray[0]);
+  // secondNumber = parseInt(tempArray[1]);
+  console.log("Operator", selectedOperator, "\n First number", firstNumber, "\n Second number", secondNumber);
+  const answer = operate(selectedOperator, firstNumber, secondNumber);
+  displayValue = answer;
+  display.innerText = displayValue;
+  firstNumber = answer;
+  secondNumber = "";
+}
+
 function handleClick(elements) {
   elements.forEach((element) =>
     element.addEventListener("click", (e) => {
@@ -61,12 +78,14 @@ function handleClick(elements) {
       if (elements == operators) {
         const currentSymbol = e.target.innerText;
         currentDisplayArray.push(currentSymbol);
-        previousInput = currentDisplayArray.pop();
+        if (!firstNumber && !secondNumber && currentSymbol == "=") {
+          console.log("= can't be the first operation");
+          return;
+        }
 
-        // If previous input is operator
-        // Set currentValue/currentSymbol to latest one
-        if (previousInput == "element") {
-          // selectedOperator = currentValue;
+        if (previousInput == currentSymbol) {
+          console.log("currentSymbol", currentSymbol, "previousInput", previousInput);
+          currentValue = "sum";
         }
 
         if (currentValue != "sum") {
@@ -82,24 +101,16 @@ function handleClick(elements) {
           secondNumber = parseInt(tempArray[1]);
         }
 
-        if (currentValue == "sum") {
-        }
+        // if (firstNumber && secondNumber) {
+        //   alert("Do something");
+        // }
+
+        previousInput = currentDisplayArray.pop();
+        // if (currentValue == "sum") {
+        // }
         switch (currentValue) {
           case "sum":
-            if (!secondNumber) {
-              console.log("asd");
-              secondNumber = firstNumber;
-            }
-            // const regex = /\+|-|\*|\//g;
-            // let tempArray = displayValue.split(regex);
-            // firstNumber = parseInt(tempArray[0]);
-            // secondNumber = parseInt(tempArray[1]);
-            console.log("Operator", selectedOperator, "\n First number", firstNumber, "\n Second number", secondNumber);
-            const answer = operate(selectedOperator, firstNumber, secondNumber);
-            displayValue = answer;
-            display.innerText = displayValue;
-            firstNumber = answer;
-            secondNumber = "";
+            calculate();
             break;
           case "add":
           case "subtract":
