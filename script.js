@@ -5,9 +5,10 @@ let displayValue = "";
 let firstNumber = 0;
 let secondNumber = 0;
 let selectedOperator;
-// let selectedOperators = [];
 let currentDisplayArray = [];
 let previousInput = "";
+
+const regex = /\+|-|\*|\//g;
 
 function add(firstValue, secondValue) {
   return firstValue + secondValue;
@@ -51,14 +52,6 @@ function operate(operator, firstValue, secondValue) {
 }
 
 function calculate() {
-  if (!secondNumber) {
-    console.log("asd");
-    secondNumber = firstNumber;
-  }
-  // const regex = /\+|-|\*|\//g;
-  // let tempArray = displayValue.split(regex);
-  // firstNumber = parseInt(tempArray[0]);
-  // secondNumber = parseInt(tempArray[1]);
   console.log("Operator", selectedOperator, "\n First number", firstNumber, "\n Second number", secondNumber);
   const answer = operate(selectedOperator, firstNumber, secondNumber);
   displayValue = answer;
@@ -66,6 +59,8 @@ function calculate() {
   firstNumber = answer;
   secondNumber = "";
 }
+
+function handleNumbers() {}
 
 function handleClick(elements) {
   elements.forEach((element) =>
@@ -78,36 +73,39 @@ function handleClick(elements) {
       if (elements == operators) {
         const currentSymbol = e.target.innerText;
         currentDisplayArray.push(currentSymbol);
-        if (!firstNumber && !secondNumber && currentSymbol == "=") {
-          console.log("= can't be the first operation");
-          return;
-        }
-
-        if (previousInput == currentSymbol) {
-          console.log("currentSymbol", currentSymbol, "previousInput", previousInput);
-          currentValue = "sum";
-        }
-
-        if (currentValue != "sum") {
-          selectedOperator = currentValue;
-        }
-        const regex = /\+|-|\*|\//g;
 
         if (!firstNumber) {
           let tempArray = displayValue.split(regex);
           firstNumber = parseInt(tempArray[0]);
         } else if (!secondNumber) {
+          console.log("displayValue", displayValue);
           let tempArray = displayValue.split(regex);
           secondNumber = parseInt(tempArray[1]);
         }
 
-        // if (firstNumber && secondNumber) {
-        //   alert("Do something");
-        // }
+        if (!firstNumber && !secondNumber) {
+          console.log("An operator can't be the first input");
+          return;
+        }
+
+        if (previousInput == currentSymbol) {
+          console.log("currentSymbol", currentSymbol, "previousInput", previousInput);
+          if (!secondNumber) {
+            console.log("secondNumber gets assigned same value as firstNumber");
+            secondNumber = firstNumber;
+          }
+        }
+
+        if (currentValue != "sum") {
+          selectedOperator = currentValue;
+        }
+
+        if (firstNumber && secondNumber) {
+          calculate();
+        }
 
         previousInput = currentDisplayArray.pop();
-        // if (currentValue == "sum") {
-        // }
+
         switch (currentValue) {
           case "sum":
             calculate();
@@ -129,17 +127,20 @@ function handleClick(elements) {
             throw new Error("Invalid operator");
         }
       } else {
+        handleNumbers();
         displayValue += currentValue;
         display.innerText = displayValue;
         currentDisplayArray.push(currentValue);
       }
       console.log("currentDisplayArray", currentDisplayArray);
-      console.log("firstNumber", firstNumber);
-      console.log("secondNumber", secondNumber);
-      console.log("displayValue", displayValue);
-      console.log("previousInput", previousInput);
+      // console.log("firstNumber", firstNumber);
+      // console.log("secondNumber", secondNumber);
+      // console.log("displayValue", displayValue);
+      // console.log("previousInput", previousInput);
     })
   );
+  // console.log(displayValue);
+  // console.log(currentDisplayArray);
 }
 
 handleClick(numbers);
