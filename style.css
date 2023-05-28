@@ -23,15 +23,17 @@ body {
 
 #calculator .display {
     background-color: #fff;
-    height: 50px;
+    height: 2.8em;
     border: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-right: 1rem;
+    margin-bottom: 1em;
+    font-size: 1.4em;
 }
 
-#calculator .button {
+#calculator .btn {
     /* border: 1px solid black; */
     padding: 1em;
     flex-basis: calc(100% / 3);
@@ -39,7 +41,7 @@ body {
     text-align: center;
 }
 
-#calculator .button:hover {
+#calculator .btn:hover {
 
     background-color: #efefef;
 }
