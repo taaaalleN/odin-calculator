@@ -19,6 +19,7 @@ body {
     padding: 1em;
     box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
+    min-width: 400px;
 }
 
 #calculator .display {
@@ -26,8 +27,9 @@ body {
     height: 2.8em;
     border: 1px solid black;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     padding-right: 1rem;
     margin-bottom: 1em;
     font-size: 1.4em;
@@ -36,7 +38,7 @@ body {
 #calculator .btn {
     /* border: 1px solid black; */
     padding: 1em;
-    flex-basis: calc(100% / 3);
+    /* flex-basis: calc(100% / 3); */
     cursor: pointer;
     text-align: center;
 }
@@ -47,18 +49,7 @@ body {
 }
 
 #calculator .buttons {
-    display: flex;
-    justify-content: center;
-}
-
-#calculator .numbers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-basis: 75%;
-}
-
-#calculator .operators { 
-    flex-basis: 25%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0.5em;
 }
