@@ -3,14 +3,9 @@ const operators = document.querySelectorAll(".buttons [data-operator]");
 const sumBtn = document.querySelector(".buttons [data-value='sum']");
 const previousInput = document.querySelector(".display .input.previous");
 const currentInput = document.querySelector(".display .input.current");
-// const display = document.querySelector(".display");
-// let displayValue = "";
 let firstNumber = null;
 let secondNumber = null;
 let selectedOperator = null;
-let selectedOperatorChar = null;
-let currentDisplayArray = [];
-// let previousInput = "";
 
 const regex = /\+|-|\*|\//g;
 
@@ -27,8 +22,6 @@ function variableHelper() {
 }
 
 function add(a, b) {
-  // console.log(a, b);
-  // console.log(a + b);
   return a + b;
 }
 
@@ -56,23 +49,6 @@ function deleteLatestInput() {
   currentInput.textContent = currentInput.textContent.split("").slice(0, -1);
 }
 
-function convertOperation(operatorSymbol) {
-  switch (operatorSymbol) {
-    case "+":
-      return "add";
-    case "-":
-      return "subtract";
-    case "*":
-      return "multiply";
-    case "/":
-      return "divide";
-    case "=":
-      return "sum";
-    default:
-      console.log("Something went wrong: ", operatorSymbol);
-  }
-}
-
 numbers.forEach((number) => number.addEventListener("click", () => handleNumbers(number.textContent)));
 operators.forEach((operator) => operator.addEventListener("click", () => setOperator(operator.textContent)));
 sumBtn.addEventListener("click", evaluate);
@@ -91,51 +67,36 @@ function setOperator(operator) {
     clear();
     return;
   }
-  // console.log("previousInput before", previousInput.textContent);
-  // console.log("currentInput before", currentInput.textContent);
 
   firstNumber = currentInput.textContent;
   console.log("previousInput", previousInput.textContent);
 
-  if (!firstNumber) {
+  if (!firstNumber && previousInput.textContent == "") {
     console.log("First input cannot be an operator");
     return;
   }
-  selectedOperator = convertOperation(operator);
-  if (operator == "=") {
-  }
+  selectedOperator = operator;
   displayNumbers();
-  // console.log("selectedOperator", selectedOperator);
-  // console.log("firstNumber", firstNumber);
-  // console.log("secondNumber", secondNumber);
 }
 
-// Display e.g. 1 + 2 on the display (somehow)
 function displayNumbers() {
   currentInput.textContent = "";
-  // previousInput.textContent = `${firstNumber} ${selectedOperator} ${secondNumber}`;
-  previousInput.textContent = `${firstNumber} ${convertToSymbol(selectedOperator)}`;
+  previousInput.textContent = `${firstNumber} ${selectedOperator}`;
 }
 
 function operate(operator, first, second) {
   first = Number(first);
   second = Number(second);
   switch (operator) {
-    case "sum":
-      // calculate();
-      // Do stuff specific to sum
-      // Don't do the "omväg" of going through setOperator
-      // evaluate();
-      break;
-    case "add":
+    case "+":
       return add(first, second);
-    case "subtract":
+    case "-":
       return subtract(first, second);
-    case "multiply":
+    case "*":
       return multiply(first, second);
-    case "divide":
+    case "/":
       return divide(first, second);
-    case "clear":
+    case "C":
       clear();
       break;
     default:
@@ -144,7 +105,7 @@ function operate(operator, first, second) {
 }
 
 function evaluate() {
-  console.log("clicked sum");
+  if (!firstNumber && !currentInput.textContent) return;
   secondNumber = currentInput.textContent;
   calculate();
 }
@@ -153,23 +114,30 @@ function calculate() {
   console.log(selectedOperator);
   const answer = operate(selectedOperator, firstNumber, secondNumber);
   console.log("answer", answer);
-  currentInput.textContent = "";
-  previousInput.textContent = `${answer}`;
+  currentInput.textContent = `${answer}`;
+  previousInput.textContent = "";
+  console.log("previousInput", previousInput.textContent);
 }
 
-function convertToSymbol() {
-  switch (selectedOperator) {
-    case "add":
-      return "+";
-    case "subtract":
-      return "-";
-    case "multiply":
-      return "*";
-    case "divide":
-      return "/";
-    case "sum":
-      return "=";
-    default:
-      throw new Error("Invalid operator symbol");
+window.addEventListener("keydown", handleKeyboard);
+
+function handleKeyboard(e) {
+  const validKeyRegex = /\+|-|\/|\*/gi;
+  console.log(e.key);
+
+  if (e.key.match(validKeyRegex)) {
+    setOperator(e.key);
+  }
+  if (e.key >= 0 && e.key <= 9) {
+    handleNumbers(e.key);
+  }
+  if (e.key == "=" || e.key == "Enter") {
+    evaluate();
+  }
+  if (e.key == "C" || e.key == "c") {
+    clear();
+  }
+  if (e.key == "Backspace") {
+    deleteLatestInput();
   }
 }
