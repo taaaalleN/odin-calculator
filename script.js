@@ -9,17 +9,16 @@ let selectedOperator = null;
 
 const regex = /\+|-|\*|\//g;
 
-const allBtns = document.querySelectorAll(".buttons .btn");
+// const allBtns = document.querySelectorAll(".buttons .btn");
+// allBtns.forEach((btn) => btn.addEventListener("click", () => variableHelper()));
 
-allBtns.forEach((btn) => btn.addEventListener("click", () => variableHelper()));
-
-function variableHelper() {
-  console.log("selectedOperator", selectedOperator);
-  console.log("firstNumber", firstNumber);
-  console.log("secondNumber", secondNumber);
-  console.log("currentInput.textContent", currentInput.textContent);
-  console.log("previousInput.textContent", previousInput.textContent);
-}
+// function variableHelper() {
+//   console.log("selectedOperator", selectedOperator);
+//   console.log("firstNumber", firstNumber);
+//   console.log("secondNumber", secondNumber);
+//   console.log("currentInput.textContent", currentInput.textContent);
+//   console.log("previousInput.textContent", previousInput.textContent);
+// }
 
 function add(a, b) {
   return a + b;
@@ -72,7 +71,7 @@ function setOperator(operator) {
   console.log("previousInput", previousInput.textContent);
 
   if (!firstNumber && previousInput.textContent == "") {
-    console.log("First input cannot be an operator");
+    alert("First input cannot be an operator");
     return;
   }
   selectedOperator = operator;
@@ -117,13 +116,14 @@ function calculate() {
   currentInput.textContent = `${answer}`;
   previousInput.textContent = "";
   console.log("previousInput", previousInput.textContent);
+  firstNumber = "";
+  secondNumber = "";
 }
 
 window.addEventListener("keydown", handleKeyboard);
 
 function handleKeyboard(e) {
   const validKeyRegex = /\+|-|\/|\*/gi;
-  console.log(e.key);
 
   if (e.key.match(validKeyRegex)) {
     setOperator(e.key);
