@@ -139,4 +139,19 @@ function handleKeyboard(e) {
   if (e.key == "Backspace") {
     deleteLatestInput();
   }
+
+  animateButtonPress(e);
+}
+
+function animateButtonPress(e) {
+  const allBtns = document.querySelectorAll("#calculator .btn");
+  allBtns.forEach((btn) => {
+    if (e.key == btn.textContent.toLowerCase() || e.key == btn.textContent) {
+      btn.classList.add("pressed");
+    }
+
+    btn.addEventListener("animationend", () => {
+      btn.classList.remove("pressed");
+    });
+  });
 }

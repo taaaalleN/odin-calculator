@@ -50,6 +50,7 @@ body {
     text-align: center;
     border-radius: 0.2em;
     /* border: 1.5px solid #333; */
+    transition: all 100ms ease-in;
 }
 
 #calculator .btn:active {
@@ -68,4 +69,18 @@ body {
 #calculator .buttons .btn[data-value="sum"] {
     background-color: rgba(235, 112, 112, 1);
     color: #fff;
+}
+
+#calculator .buttons .btn.pressed {
+    animation: pressedAnim 100ms;
+}
+
+@keyframes pressedAnim {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(3px);
+    }
 }
