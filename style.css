@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Foldit:wght@400;500&family=Orbitron:wght@400;500&family=ZCOOL+QingKe+HuangYou&display=swap');
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -5,7 +7,6 @@
 body {
     display: grid;
     place-items: center;
-    /* min-height: 90vh; */
     height: 100vh;
     margin: 0;
     padding: 0;
@@ -13,8 +14,7 @@ body {
 }
 
 #calculator {
-    background-color: #fff;
-    opacity: 0.6;
+    background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(3px);
     padding: 1em;
     box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.8);
@@ -23,9 +23,8 @@ body {
 }
 
 #calculator .display {
-    background-color: #fff;
     height: 2.8em;
-    border: 1px solid black;
+    border: 2px solid #333;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -33,23 +32,40 @@ body {
     padding-right: 1rem;
     margin-bottom: 1em;
     font-size: 1.4em;
-}
-
-#calculator .btn {
-    /* border: 1px solid black; */
-    padding: 1em;
-    /* flex-basis: calc(100% / 3); */
-    cursor: pointer;
-    text-align: center;
-}
-
-#calculator .btn:hover {
-
-    background-color: #efefef;
+    font-family: 'Foldit', cursive;
+    /* color: #333; */
+    font-family: 'Orbitron', sans-serif;
+    /* font-family: 'ZCOOL QingKe HuangYou', sans-serif; */
 }
 
 #calculator .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0.5em;
+}
+
+#calculator .btn {
+    padding: 1em;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0.2em;
+    /* border: 1.5px solid #333; */
+}
+
+#calculator .btn:active {
+    transform: translateY(3px);
+}
+
+#calculator .buttons .btn[data-number] {
+    opacity: 0.6;
+}
+
+#calculator .buttons .btn[data-operator] {
+    background-color: #333;
+    color: #fff;
+}
+
+#calculator .buttons .btn[data-value="sum"] {
+    background-color: rgba(235, 112, 112, 1);
+    color: #fff;
 }

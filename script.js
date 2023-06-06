@@ -68,7 +68,6 @@ function setOperator(operator) {
   }
 
   firstNumber = currentInput.textContent;
-  console.log("previousInput", previousInput.textContent);
 
   if (!firstNumber && previousInput.textContent == "") {
     alert("First input cannot be an operator");
@@ -106,16 +105,16 @@ function operate(operator, first, second) {
 function evaluate() {
   if (!firstNumber && !currentInput.textContent) return;
   secondNumber = currentInput.textContent;
+  if (currentInput.textContent == "") {
+    secondNumber = firstNumber;
+  }
   calculate();
 }
 
 function calculate() {
-  console.log(selectedOperator);
   const answer = operate(selectedOperator, firstNumber, secondNumber);
-  console.log("answer", answer);
   currentInput.textContent = `${answer}`;
   previousInput.textContent = "";
-  console.log("previousInput", previousInput.textContent);
   firstNumber = "";
   secondNumber = "";
 }
