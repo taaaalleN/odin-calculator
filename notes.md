@@ -1,4 +1,5 @@
-Saker att fundera på:
+To-do list:
 
-- Varför körs operationen (ex. add) två gånger?
-- Hur göra så att firstNumber och secondNumber alltid är nummer? Just nu är secondNumber inte alltid ett nummer.
+- Can't delete operators, only numbers
+  - Decided to skip this as it was more work than it was worth.
+- When operator has been pressed, pressing another operator will overwrite the whole input, not just the previous operator

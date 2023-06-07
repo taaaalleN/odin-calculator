@@ -45,7 +45,13 @@ function clear() {
 }
 
 function deleteLatestInput() {
-  currentInput.textContent = currentInput.textContent.split("").slice(0, -1);
+  currentInput.textContent = currentInput.textContent.split("").slice(0, -1).join("");
+  // if (currentInput.textContent != "") {
+  //   currentInput.textContent = currentInput.textContent.split("").slice(0, -1).join("");
+  // } else {
+  //   previousInput.textContent = previousInput.textContent.split("").slice(0, -1).join("");
+  //   console.log(previousInput.textContent);
+  // }
 }
 
 numbers.forEach((number) => number.addEventListener("click", () => handleNumbers(number.textContent)));
