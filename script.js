@@ -61,21 +61,26 @@ operators.forEach((operator) => operator.addEventListener("click", () => setOper
 sumBtn.addEventListener("click", evaluate);
 
 function handleNumbers(number) {
-  currentInput.textContent += number;
+  if (currentInput.textContent == "0") {
+    currentInput.textContent = number;
+  } else {
+    currentInput.textContent += number;
+  }
 }
 
 function setOperator(operator) {
+  if (firstNumber && selectedOperator == operator) {
+    secondNumber = firstNumber;
+    // currentInput.textContent.split("").slice(0, -1).join("");
+    evaluate();
+    return;
+  }
+
   if (selectedOperator && operator != "C") {
     firstNumber = previousInput.textContent.split("").slice(0, -1).join("");
     selectedOperator = operator;
     previousInput.textContent = `${firstNumber} ${selectedOperator}`;
-    console.log("sakdskd");
     return;
-  }
-
-  if (firstNumber && selectedOperator == operator) {
-    secondNumber = firstNumber;
-    evaluate();
   }
 
   if (operator == "C") {
