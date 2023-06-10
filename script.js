@@ -6,19 +6,21 @@ const currentInput = document.querySelector(".display .input.current");
 let firstNumber = null;
 let secondNumber = null;
 let selectedOperator = null;
+let savedFirstNumber = null;
 
 const regex = /\+|-|\*|\//g;
 
-// const allBtns = document.querySelectorAll(".buttons .btn");
-// allBtns.forEach((btn) => btn.addEventListener("click", () => variableHelper()));
+const allBtns = document.querySelectorAll(".buttons .btn");
+allBtns.forEach((btn) => btn.addEventListener("click", () => variableHelper()));
+window.addEventListener("keydown", () => variableHelper());
 
-// function variableHelper() {
-//   console.log("selectedOperator", selectedOperator);
-//   console.log("firstNumber", firstNumber);
-//   console.log("secondNumber", secondNumber);
-//   console.log("currentInput.textContent", currentInput.textContent);
-//   console.log("previousInput.textContent", previousInput.textContent);
-// }
+function variableHelper() {
+  console.log("selectedOperator", selectedOperator);
+  console.log("firstNumber", firstNumber);
+  console.log("secondNumber", secondNumber);
+  console.log("currentInput.textContent", currentInput.textContent);
+  console.log("previousInput.textContent", previousInput.textContent);
+}
 
 function add(a, b) {
   return a + b;
@@ -63,6 +65,14 @@ function handleNumbers(number) {
 }
 
 function setOperator(operator) {
+  if (selectedOperator && operator != "C") {
+    firstNumber = previousInput.textContent.split("").slice(0, -1).join("");
+    selectedOperator = operator;
+    previousInput.textContent = `${firstNumber} ${selectedOperator}`;
+    console.log("sakdskd");
+    return;
+  }
+
   if (firstNumber && selectedOperator == operator) {
     secondNumber = firstNumber;
     evaluate();
@@ -123,6 +133,7 @@ function calculate() {
   previousInput.textContent = "";
   firstNumber = "";
   secondNumber = "";
+  selectedOperator = "";
 }
 
 window.addEventListener("keydown", handleKeyboard);
